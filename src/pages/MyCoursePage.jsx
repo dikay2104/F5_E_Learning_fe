@@ -4,7 +4,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getMyEnrollments } from '../services/enrollmentService';
 import Loading from '../components/Loading';
-import { Card, Button, Progress, List, Typography, Avatar, Input } from 'antd';
+import { Card, Button, Progress, List, Typography, Avatar, Input, Row, Col } from 'antd';
 import { getLessonsByCourse } from '../services/lessonService';
 import { getProgressByCourse } from '../services/progressService';
 import { UserOutlined } from '@ant-design/icons';
@@ -144,14 +144,7 @@ export default function MyCoursesPage() {
       <h2>Khóa học của tôi</h2>
 
 {/* GRID LAYOUT MỚI – ĐẸP VÀ CHUYÊN NGHIỆP */}
-<div
-  style={{
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-    gap: "32px",
-    width: "100%",
-  }}
->
+<Row gutter={[24, 24]}>
   {([...filteredEnrollments]
     .sort((a, b) => new Date(b.enrolledAt) - new Date(a.enrolledAt)) // Sắp xếp mới → cũ
     .filter(enrollment => enrollment.course && enrollment.course._id)
@@ -160,7 +153,15 @@ export default function MyCoursesPage() {
       const firstLessonId = firstLessonMap[course._id];
       const percent = progresses[course._id] || 0;
       return (
-        <Card
+        <Col
+          key={course._id}
+          xs={24}   // mobile: 1 cột
+          sm={12}   // tablet: 2 cột
+          md={12}   // desktop nhỏ: 2 cột
+          lg={6}    // desktop lớn: 4 cột
+          xl={6}
+        >
+          <Card
           key={course._id}
           hoverable
           style={{
@@ -208,9 +209,10 @@ export default function MyCoursesPage() {
 
           <Progress percent={percent} size="small" />
         </Card>
+        </Col>
       );
     }))}
-</div>
+</Row>
 
     </div>
   );

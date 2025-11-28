@@ -161,6 +161,24 @@ export default function StudentCourseDetail() {
     lessons: lessons.filter(l => l.collection === collection._id).sort((a, b) => a.order - b.order),
   }));
 
+  const categoryMap = {
+    child_psychology: "Tâm lý trẻ em",
+    parenting_skills: "Kỹ năng làm cha mẹ",
+    child_health_nutrition: "Sức khỏe & Dinh dưỡng trẻ em",
+    kids_technology: "Công nghệ & trẻ nhỏ",
+    early_education_skills: "Giáo dục sớm & phát triển kỹ năng",
+    parent_mental_balance: "Cân bằng tâm lý cho cha mẹ",
+  };
+  
+  const categoryColor = {
+    child_psychology: 'magenta',
+    parenting_skills: 'blue',
+    child_health_nutrition: 'green',
+    kids_technology: 'cyan',
+    early_education_skills: 'purple',
+    parent_mental_balance: 'orange',
+  };
+
   if (loading) return <Loading />;
   if (!course) return <p>Không tìm thấy khóa học</p>;
 
@@ -185,8 +203,8 @@ export default function StudentCourseDetail() {
             <Title level={2} style={{ marginBottom: 8 }}>{course.title}</Title>
             <Text type="secondary">{course.description}</Text>
             <div style={{ margin: '16px 0' }}>
-              <Tag color="blue">{course.level?.toUpperCase()}</Tag>
-              <Tag color="purple">{course.category}</Tag>
+              {/* <Tag color="blue">{course.level?.toUpperCase()}</Tag> */}
+              <Tag color={categoryColor[course.category]}>{categoryMap[course.category]}</Tag>
             </div>
             <div style={{ marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
               <Avatar icon={<UserOutlined />} size={48} style={{ background: '#e6f7ff' }} />

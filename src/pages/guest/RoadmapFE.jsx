@@ -19,12 +19,12 @@ export default function RoadmapFE() {
   }, []);
 
   // Lọc các khóa học theo từng mục chuyên đề
-  const childPsychology = courses.filter(c => c.category === "child_psychology");
-  const parentingSkills = courses.filter(c => c.category === "parenting_skills");
-  const childHealth = courses.filter(c => c.category === "child_health_nutrition");
-  const kidsTechnology = courses.filter(c => c.category === "kids_technology");
-  const earlyEducation = courses.filter(c => c.category === "early_education_skills");
-  const parentMental = courses.filter(c => c.category === "parent_mental_balance");
+  const childPsychology = courses.filter(c => c.category === "child_psychology").slice(0, 3);
+  const parentingSkills = courses.filter(c => c.category === "parenting_skills").slice(0, 3);
+  const childHealth = courses.filter(c => c.category === "child_health_nutrition").slice(0, 3);
+  const kidsTechnology = courses.filter(c => c.category === "kids_technology").slice(0, 3);
+  const earlyEducation = courses.filter(c => c.category === "early_education_skills").slice(0, 3);
+  const parentMental = courses.filter(c => c.category === "parent_mental_balance").slice(0, 3);
 
   return (
     <div style={{ maxWidth: 1000, margin: '0 auto', padding: '32px 16px' }}>
