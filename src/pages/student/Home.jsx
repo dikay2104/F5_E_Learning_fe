@@ -4,7 +4,7 @@ import CourseCardStudent from "../../components/CourseCardStudent";
 import Loading from "../../components/Loading";
 import { useAuth } from "../../context/authContext";
 import { useNavigate, useLocation } from "react-router-dom";
-import { message, Typography, Divider, Spin, Empty, Carousel, Button, Input, Select, Space } from "antd";
+import { message, Typography, Divider, Spin, Empty, Carousel, Button, Input, Select, Space, Pagination  } from "antd";
 import { getMyEnrollments } from "../../services/enrollmentService";
 import axios from "axios";
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
@@ -14,19 +14,19 @@ const { Title } = Typography;
 
 const slides = [
   {
-    title: 'Học IT từ con số 0',
-    desc: 'Lộ trình rõ ràng, mentor đồng hành, thực chiến dự án thực tế.',
-    img: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80',
+    title: 'Học làm cha mẹ từ con số 0',
+    desc: 'Khoá học chất lượng, video ngắn mỗi ngày, đồng hành cùng chuyên gia nuôi dạy trẻ. Học nhanh – áp dụng ngay vào cuộc sống.',
+    img: 'https://res.cloudinary.com/djaolkvze/image/upload/v1763817979/1_ta2xk4.jpg',
   },
   {
-    title: 'Cộng đồng hỗ trợ 24/7',
-    desc: 'Tham gia group học tập, hỏi đáp, chia sẻ kinh nghiệm cùng hàng ngàn học viên.',
-    img: 'https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=800&q=80',
+    title: 'Cộng đồng phụ huynh hỗ trợ 24/7',
+    desc: 'Tham gia nhóm trao đổi, đặt câu hỏi, chia sẻ kinh nghiệm nuôi dạy con cùng hàng nghìn phụ huynh khác.',
+    img: 'https://res.cloudinary.com/djaolkvze/image/upload/v1763817980/2_d3rp8d.jpg',
   },
   {
-    title: 'Nâng cấp sự nghiệp IT',
-    desc: 'Khóa học nâng cao, cập nhật công nghệ mới, mentor là chuyên gia thực chiến.',
-    img: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80',
+    title: 'Nâng cấp kỹ năng làm cha mẹ',
+    desc: 'Những khóa học chuyên sâu, cập nhật kiến thức mới về tâm lý trẻ, sức khỏe, kỹ năng giao tiếp gia đình — được hướng dẫn bởi chuyên gia thực hành.',
+    img: 'https://res.cloudinary.com/djaolkvze/image/upload/v1763817982/3_v7sqok.jpg',
   },
 ];
 
@@ -40,8 +40,13 @@ export default function StudentHome() {
   const carouselRef = useRef();
   const [searchValue, setSearchValue] = useState("");
   const [priceFilter, setPriceFilter] = useState("all");
-  const [levelFilter, setLevelFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
+  const [freePage, setFreePage] = useState(1);
+  const [vipPage, setVipPage] = useState(1);
+
+  // Mỗi trang hiển thị 6 khóa học
+  const PAGE_SIZE = 6;
+
 
   // Lấy danh sách enrollment khi vào trang hoặc sau khi thanh toán thành công
   const fetchEnrollments = async () => {
@@ -130,22 +135,38 @@ export default function StudentHome() {
     })
     .filter(course => {
       if (priceFilter === 'all') return true;
-      if (priceFilter === '0-500') return course.price >= 0 && course.price <= 500000;
-      if (priceFilter === '500-1m') return course.price > 500000 && course.price <= 1000000;
-      if (priceFilter === '1m+') return course.price > 1000000;
+      if (priceFilter === '0-80k') return course.price >= 0 && course.price <= 80000;
+      if (priceFilter === '80-150k') return course.price > 80000 && course.price <= 150000;
+      if (priceFilter === '150k+') return course.price > 150000;
       return true;
     })
     .filter(course => {
-      if (levelFilter === 'all') return true;
-      return course.level === levelFilter;
-    })
-    .filter(course => {
       if (categoryFilter === 'all') return true;
-      return course.category?.toLowerCase() === categoryFilter;
-    });
+      return course.category === categoryFilter;
+    })
+
 
   const freeCourses = filteredCourses.filter((c) => c.price === 0);
   const vipCourses = filteredCourses.filter((c) => c.price > 0);
+
+  // Chia trang Free Courses
+const paginatedFreeCourses = freeCourses.slice(
+  (freePage - 1) * PAGE_SIZE,
+  freePage * PAGE_SIZE
+);
+
+// Chia trang VIP Courses
+const paginatedVipCourses = vipCourses.slice(
+  (vipPage - 1) * PAGE_SIZE,
+  vipPage * PAGE_SIZE
+);
+
+// Reset pagination khi filter/search thay đổi
+useEffect(() => {
+  setFreePage(1);
+  setVipPage(1);
+}, [searchValue, priceFilter, categoryFilter]);
+
 
   // Responsive grid: auto-fit cho mọi thiết bị
   const renderCourseGrid = (courseList) => (
@@ -282,29 +303,22 @@ export default function StudentHome() {
           onChange={(value) => setPriceFilter(value)}
         >
           <Select.Option value="all">Tất cả mức giá</Select.Option>
-          <Select.Option value="0-500">0 - 500.000đ</Select.Option>
-          <Select.Option value="500-1m">500.000đ - 1 triệu</Select.Option>
-          <Select.Option value="1m+">Trên 1 triệu</Select.Option>
+          <Select.Option value="0-80k">0 - 80.000đ</Select.Option>
+          <Select.Option value="80-150k">80.000đ - 150.000đ</Select.Option>
+          <Select.Option value="150k+">Trên 150.000đ</Select.Option>
         </Select>
         <Select
           defaultValue="all"
-          style={{ width: 180 }}
-          onChange={(value) => setLevelFilter(value)}
-        >
-          <Select.Option value="all">Tất cả cấp độ</Select.Option>
-          <Select.Option value="beginner">Beginner</Select.Option>
-          <Select.Option value="intermediate">Intermediate</Select.Option>
-          <Select.Option value="advanced">Advanced</Select.Option>
-        </Select>
-        <Select
-          defaultValue="all"
-          style={{ width: 180 }}
+          style={{ width: 220 }}
           onChange={(value) => setCategoryFilter(value)}
         >
           <Select.Option value="all">Tất cả danh mục</Select.Option>
-          <Select.Option value="programming">Programming</Select.Option>
-          <Select.Option value="business">Business</Select.Option>
-          <Select.Option value="design">Design</Select.Option>
+          <Select.Option value="child_psychology">Tâm lý trẻ em</Select.Option>
+          <Select.Option value="parenting_skills">Kỹ năng làm cha mẹ</Select.Option>
+          <Select.Option value="child_health_nutrition">Sức khỏe & dinh dưỡng trẻ em</Select.Option>
+          <Select.Option value="kids_technology">Công nghệ & trẻ nhỏ</Select.Option>
+          <Select.Option value="early_education_skills">Giáo dục sớm & phát triển kỹ năng</Select.Option>
+          <Select.Option value="parent_mental_balance">Cân bằng tâm lý cho cha mẹ</Select.Option>
         </Select>
       </div>
 
@@ -320,14 +334,25 @@ export default function StudentHome() {
         ) : freeCourses.length === 0 ? (
           <Empty description="Chưa có khóa học miễn phí" style={{ margin: '32px 0' }} />
         ) : (
-          renderCourseGrid(freeCourses)
+          <>
+  {renderCourseGrid(paginatedFreeCourses)}
+  <div style={{ textAlign: "center", marginTop: 24 }}>
+    <Pagination
+      current={freePage}
+      total={freeCourses.length}
+      pageSize={PAGE_SIZE}
+      onChange={(page) => setFreePage(page)}
+      showSizeChanger={false}
+    />
+  </div>
+</>
         )}
       </div>
 
       {/* Khóa học VIP/Pro */}
       <div style={{ marginBottom: 48 }}>
         <Divider orientation="left" orientationMargin={0} style={{ fontWeight: 600, fontSize: 18 }}>
-          Khóa học VIP
+          Khóa học trả phí
         </Divider>
         {loading ? (
           <div style={{ textAlign: 'center', padding: '40px 0' }}>
@@ -336,7 +361,18 @@ export default function StudentHome() {
         ) : vipCourses.length === 0 ? (
           <Empty description="Chưa có khóa học VIP" style={{ margin: '32px 0' }} />
         ) : (
-          renderCourseGrid(vipCourses)
+          <>
+  {renderCourseGrid(paginatedVipCourses)}
+  <div style={{ textAlign: "center", marginTop: 24 }}>
+    <Pagination
+      current={vipPage}
+      total={vipCourses.length}
+      pageSize={PAGE_SIZE}
+      onChange={(page) => setVipPage(page)}
+      showSizeChanger={false}
+    />
+  </div>
+</>
         )}
       </div>
     </div>

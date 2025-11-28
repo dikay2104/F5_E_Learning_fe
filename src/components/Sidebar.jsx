@@ -9,7 +9,8 @@ import {
   SettingOutlined,
   ExclamationCircleOutlined,
   CodeOutlined,
-  DatabaseOutlined
+  DatabaseOutlined,
+  UnorderedListOutlined,
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
@@ -53,8 +54,8 @@ export default function Sidebar() {
 
   const guestItems = [
     { key: '/guest/home', icon: <AppstoreOutlined />, label: 'Home' },
-    { key: '/roadmap-fe', icon: <CodeOutlined />, label: 'Lộ trình Frontend' },
-    { key: '/roadmap-be', icon: <DatabaseOutlined />, label: 'Lộ trình Backend' },
+    { key: '/roadmap-fe', icon: <UnorderedListOutlined  />, label: 'Chuyên mục' },
+    // { key: '/roadmap-be', icon: <DatabaseOutlined />, label: 'Lộ trình Backend' },
     commonAboutItem,
   ];
 

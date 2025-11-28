@@ -6,37 +6,37 @@ const { Title, Paragraph, Text } = Typography;
 
 const slides = [
   {
-    title: 'Học IT từ con số 0',
-    desc: 'Lộ trình rõ ràng, mentor đồng hành, thực chiến dự án thực tế.',
-    img: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80',
+    title: 'Học làm cha mẹ từ con số 0',
+    desc: 'Khoá học chất lượng, video ngắn mỗi ngày, đồng hành cùng chuyên gia nuôi dạy trẻ. Học nhanh – áp dụng ngay vào cuộc sống.',
+    img: 'https://res.cloudinary.com/djaolkvze/image/upload/v1763817979/1_ta2xk4.jpg',
   },
   {
-    title: 'Cộng đồng hỗ trợ 24/7',
-    desc: 'Tham gia group học tập, hỏi đáp, chia sẻ kinh nghiệm cùng hàng ngàn học viên.',
-    img: 'https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=800&q=80',
+    title: 'Cộng đồng phụ huynh hỗ trợ 24/7',
+    desc: 'Tham gia nhóm trao đổi, đặt câu hỏi, chia sẻ kinh nghiệm nuôi dạy con cùng hàng nghìn phụ huynh khác.',
+    img: 'https://res.cloudinary.com/djaolkvze/image/upload/v1763817980/2_d3rp8d.jpg',
   },
   {
-    title: 'Nâng cấp sự nghiệp IT',
-    desc: 'Khóa học nâng cao, cập nhật công nghệ mới, mentor là chuyên gia thực chiến.',
-    img: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80',
+    title: 'Nâng cấp kỹ năng làm cha mẹ',
+    desc: 'Những khóa học chuyên sâu, cập nhật kiến thức mới về tâm lý trẻ, sức khỏe, kỹ năng giao tiếp gia đình — được hướng dẫn bởi chuyên gia thực hành.',
+    img: 'https://res.cloudinary.com/djaolkvze/image/upload/v1763817982/3_v7sqok.jpg',
   },
 ];
 
 const news = [
   {
-    title: 'Phỏng vấn sinh viên học IT',
-    content: '“Nhờ F5 Learning, mình đã có lộ trình học rõ ràng, được mentor hỗ trợ tận tình và tự tin apply thực tập chỉ sau 6 tháng!” – Minh, sinh viên năm 2.',
-    img: 'https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=400&q=80',
+    title: 'Phỏng vấn phụ huynh có con 3–6 tuổi',
+    content: '“Học trên Learning for Parents chỉ 5 phút mỗi ngày mà mình hiểu tâm lý con rõ hơn hẳn. Bé nhà mình bớt mè nheo và biết nói cảm xúc sau 2 tuần.” – Trang, mẹ bé 4 tuổi.',
+    img: 'https://res.cloudinary.com/djaolkvze/image/upload/v1763817980/4_rn6fwc.jpg',
   },
   {
-    title: 'Phỏng vấn người đi làm chuyển ngành IT',
-    content: '“Mình từng là kế toán, nhờ các khóa học thực chiến và cộng đồng hỗ trợ, mình đã chuyển sang làm lập trình viên backend tại công ty công nghệ lớn.” – Huyền, 27 tuổi.',
-    img: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80',
+    title: 'Phỏng vấn phụ huynh bận rộn',
+    content: '“Video ngắn nhưng rất thực tế. Nhờ khóa ‘Giao tiếp tích cực’, con mình hợp tác hơn và gia đình ít căng thẳng hơn thấy rõ.” – Hoàng, bố bé 7 tuổi.',
+    img: 'https://res.cloudinary.com/djaolkvze/image/upload/v1763817980/5_gutdtv.jpg',
   },
   {
-    title: 'F5 Learning – Nền tảng học IT hiện đại',
-    content: 'F5 Learning cung cấp lộ trình học bài bản, mentor giàu kinh nghiệm, hệ thống bài tập thực tế và hỗ trợ 1-1 giúp bạn chinh phục ngành IT dễ dàng.',
-    img: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80',
+    title: 'Learning for Parents – Nền tảng học thông minh dành cho cha mẹ',
+    content: 'Nền tảng cung cấp các bài học 3–5 phút giúp phụ huynh hiểu con, dạy con dễ hơn và xây dựng gia đình hạnh phúc mỗi ngày.',
+    img: 'https://res.cloudinary.com/djaolkvze/image/upload/v1763817979/6_vpwykr.jpg',
   },
 ];
 
@@ -126,7 +126,7 @@ export default function AboutUs() {
       {/* 3. News Section */}
       <div>
       <Divider orientation="left" orientationMargin={0} style={{ fontWeight: 600, fontSize: 18 }}>
-          Khóa học miễn phí
+          Thông tin mới nhất
         </Divider><Row gutter={[32, 32]} justify="center">
           {news.map((item, idx) => (
             <Col xs={24} sm={12} md={8} key={idx}>

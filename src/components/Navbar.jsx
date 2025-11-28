@@ -160,7 +160,7 @@ export default function Navbar() {
     <>
       <Menu mode="horizontal" theme="light" style={{ height: 55, lineHeight: '55px' }}>
         <Menu.Item key="logo" onClick={() => navigate('/')}>
-          <div style={{ fontWeight: 'bold', fontSize: 18 }}>F5 Learning</div>
+          <div style={{ fontWeight: 'bold', fontSize: 18 }}>Learning For Parents</div>
         </Menu.Item>
 
         <Menu.Item key="spacer" style={{ marginLeft: 'auto', cursor: 'default' }} disabled />

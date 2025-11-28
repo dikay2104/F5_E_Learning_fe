@@ -142,46 +142,76 @@ export default function MyCoursesPage() {
         </div>
       </div>
       <h2>Khóa học của tôi</h2>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24 }}>
-        {filteredEnrollments
-          .filter(enrollment => enrollment.course && enrollment.course._id)
-          .map(enrollment => {
-            const course = enrollment.course;
-            const firstLessonId = firstLessonMap[course._id];
-            const percent = progresses[course._id] || 0;
-            return (
-              <div key={course._id}>
-                <Card
-                  hoverable
-                  style={{ width: 320, cursor: 'pointer' }}
-                  onClick={() => {
-                    if (firstLessonMap[course._id]) {
-                      localStorage.setItem('currentCourseId', course._id); // Lưu courseId cho LessonLearn
-                      navigate(`/student/lessons/${firstLessonMap[course._id]}`);
-                    }
-                  }}
-                  cover={
-                    <img
-                      alt="course-thumbnail"
-                      src={course.thumbnail}
-                      style={{ height: 200, objectFit: 'cover' }}
-                    />
-                  }
-                >
-                  <h3>{course.title}</h3>
-                  <div>Thời lượng: {typeof course.duration === 'number' && !isNaN(course.duration) && course.duration > 0
-                    ? (course.duration >= 3600
-                      ? `${Math.floor(course.duration / 3600)} giờ ${Math.floor((course.duration % 3600) / 60)} phút`
-                      : `${Math.floor(course.duration / 60)} phút`)
-                    : '0 phút'}
-                  </div>
-                  <div>Số học viên: {course.studentsCount}</div>
-                  <Progress percent={percent} size="small" style={{ margin: '8px 0' }} />
-                </Card>
-              </div>
-            );
-          })}
-      </div>
+
+{/* GRID LAYOUT MỚI – ĐẸP VÀ CHUYÊN NGHIỆP */}
+<div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+    gap: "32px",
+    width: "100%",
+  }}
+>
+  {([...filteredEnrollments]
+    .sort((a, b) => new Date(b.enrolledAt) - new Date(a.enrolledAt)) // Sắp xếp mới → cũ
+    .filter(enrollment => enrollment.course && enrollment.course._id)
+    .map(enrollment => {
+      const course = enrollment.course;
+      const firstLessonId = firstLessonMap[course._id];
+      const percent = progresses[course._id] || 0;
+      return (
+        <Card
+          key={course._id}
+          hoverable
+          style={{
+            width: "100%",
+            cursor: "pointer",
+            borderRadius: 12,
+            overflow: "hidden",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.12)"
+          }}
+          onClick={() => {
+            if (firstLessonMap[course._id]) {
+              localStorage.setItem("currentCourseId", course._id);
+              navigate(`/student/lessons/${firstLessonId}`);
+            }
+          }}
+          cover={
+            <img
+              alt="course-thumbnail"
+              src={course.thumbnail}
+              style={{
+                width: "100%",
+                height: 200,
+                objectFit: "cover",
+                display: "block"
+              }}
+            />
+          }
+        >
+          <h3 style={{ marginBottom: 8 }}>{course.title}</h3>
+
+          <div style={{ marginBottom: 6 }}>
+            Thời lượng:{" "}
+            {typeof course.duration === "number" &&
+            !isNaN(course.duration) &&
+            course.duration > 0
+              ? course.duration >= 3600
+                ? `${Math.floor(course.duration / 3600)} giờ ${Math.floor(
+                    (course.duration % 3600) / 60
+                  )} phút`
+                : `${Math.floor(course.duration / 60)} phút`
+              : "0 phút"}
+          </div>
+
+          <div style={{ marginBottom: 8 }}>Số học viên: {course.studentsCount}</div>
+
+          <Progress percent={percent} size="small" />
+        </Card>
+      );
+    }))}
+</div>
+
     </div>
   );
 }

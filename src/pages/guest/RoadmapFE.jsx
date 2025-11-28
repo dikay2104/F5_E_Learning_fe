@@ -18,26 +18,29 @@ export default function RoadmapFE() {
       .finally(() => setLoading(false));
   }, []);
 
-  // Lọc các khóa học theo từng giai đoạn
-  const htmlCourses = courses.filter(c => c.title?.toLowerCase().includes('html'));
-  const basicCourses = courses.filter(c => c.title?.toLowerCase().includes('cơ bản') || c.title?.toLowerCase().includes('basic') || c.title?.toLowerCase().includes('fullstack'));
-  const advancedCourses = courses.filter(c => c.title?.toLowerCase().includes('react') || c.level === 'advanced');
+  // Lọc các khóa học theo từng mục chuyên đề
+  const childPsychology = courses.filter(c => c.category === "child_psychology");
+  const parentingSkills = courses.filter(c => c.category === "parenting_skills");
+  const childHealth = courses.filter(c => c.category === "child_health_nutrition");
+  const kidsTechnology = courses.filter(c => c.category === "kids_technology");
+  const earlyEducation = courses.filter(c => c.category === "early_education_skills");
+  const parentMental = courses.filter(c => c.category === "parent_mental_balance");
 
   return (
     <div style={{ maxWidth: 1000, margin: '0 auto', padding: '32px 16px' }}>
-      <Title level={1} style={{ color: '#1677ff', marginBottom: 12 }}>Lộ trình học Frontend</Title>
+      <Title level={1} style={{ color: '#1677ff', marginBottom: 12 }}>Chuyên mục kiến thức nuôi dạy trẻ</Title>
       <Paragraph style={{ fontSize: 18, marginBottom: 24 }}>
-        Lộ trình học Frontend giúp bạn xây dựng nền tảng vững chắc về HTML, CSS, JavaScript và các framework hiện đại như ReactJS. Bạn sẽ được hướng dẫn từ cơ bản đến nâng cao, thực hành qua các dự án thực tế để trở thành lập trình viên giao diện chuyên nghiệp.
+        Chuyên mục tập hợp các khóa học giúp bố mẹ hiểu con sâu sắc hơn và xây dựng sự kết nối tích cực trong gia đình. Mỗi chủ đề đều xoay quanh hành trình trưởng thành của trẻ — từ cảm xúc, kỹ năng, sức khỏe đến thói quen sống lành mạnh.
       </Paragraph>
 
       <Divider orientation="left" orientationMargin={0} style={{ fontWeight: 600 }}>
-        <span style={{ fontSize: 20 }}>1. Bắt đầu với HTML &amp; CSS</span>
+        <span style={{ fontSize: 20 }}>1. TÂM LÝ TRẺ EM</span>
       </Divider>
-      <Paragraph>Học HTML &amp; CSS là bước đầu tiên để xây dựng giao diện web. Bạn sẽ hiểu cấu trúc trang web, cách trình bày nội dung và tạo giao diện đẹp mắt.</Paragraph>
+      <Paragraph>Giúp cha mẹ hiểu cảm xúc, hành vi và sự phát triển tâm lý của trẻ ở từng giai đoạn.</Paragraph>
       {loading ? <Spin size="large" style={{ display: 'block', margin: '40px auto' }} /> :
-        htmlCourses.length === 0 ? <Empty description="Chưa có khóa học HTML & CSS" style={{ margin: '32px 0' }} /> :
+        childPsychology.length === 0 ? <Empty description="Chưa có khóa học tâm lý trẻ em" style={{ margin: '32px 0' }} /> :
         <Row gutter={[24, 24]}>
-          {htmlCourses.map(course => (
+          {childPsychology.map(course => (
             <Col xs={24} sm={12} md={8} key={course._id}>
               <CourseCard course={course} role="guest" onClick={() => navigate(`/courses/${course._id}`)} />
             </Col>
@@ -46,13 +49,13 @@ export default function RoadmapFE() {
       }
 
       <Divider orientation="left" orientationMargin={0} style={{ fontWeight: 600, marginTop: 40 }}>
-        <span style={{ fontSize: 20 }}>2. Basic Frontend Fullstack</span>
+        <span style={{ fontSize: 20 }}>2. KỸ NĂNG LÀM CHA MẸ</span>
       </Divider>
-      <Paragraph>Tiếp theo, bạn sẽ học JavaScript, các khái niệm lập trình web hiện đại và cách kết hợp với backend để xây dựng ứng dụng hoàn chỉnh.</Paragraph>
+      <Paragraph>Cung cấp công cụ giao tiếp và tương tác tích cực giữa cha mẹ và con.</Paragraph>
       {loading ? <Spin size="large" style={{ display: 'block', margin: '40px auto' }} /> :
-        basicCourses.length === 0 ? <Empty description="Chưa có khóa học cơ bản/fullstack" style={{ margin: '32px 0' }} /> :
+        parentingSkills.length === 0 ? <Empty description="Chưa có khóa học kỹ năng làm cha mẹ" style={{ margin: '32px 0' }} /> :
         <Row gutter={[24, 24]}>
-          {basicCourses.map(course => (
+          {parentingSkills.map(course => (
             <Col xs={24} sm={12} md={8} key={course._id}>
               <CourseCard course={course} role="guest" onClick={() => navigate(`/courses/${course._id}`)} />
             </Col>
@@ -61,13 +64,58 @@ export default function RoadmapFE() {
       }
 
       <Divider orientation="left" orientationMargin={0} style={{ fontWeight: 600, marginTop: 40 }}>
-        <span style={{ fontSize: 20 }}>3. Các khóa nâng cao (ReactJS, ...)</span>
+        <span style={{ fontSize: 20 }}>3.  SỨC KHỎE & DINH DƯỠNG TRẺ EM</span>
       </Divider>
-      <Paragraph>Sau khi nắm vững nền tảng, bạn sẽ học các framework hiện đại như ReactJS để xây dựng ứng dụng web động, tối ưu trải nghiệm người dùng.</Paragraph>
+      <Paragraph>Hướng dẫn cha mẹ về thói quen ăn uống, giấc ngủ, và chăm sóc thể chất.</Paragraph>
       {loading ? <Spin size="large" style={{ display: 'block', margin: '40px auto' }} /> :
-        advancedCourses.length === 0 ? <Empty description="Chưa có khóa học nâng cao" style={{ margin: '32px 0' }} /> :
+        childHealth.length === 0 ? <Empty description="Chưa có khóa học sức khỏe & dinh dưỡng trẻ em" style={{ margin: '32px 0' }} /> :
         <Row gutter={[24, 24]}>
-          {advancedCourses.map(course => (
+          {childHealth.map(course => (
+            <Col xs={24} sm={12} md={8} key={course._id}>
+              <CourseCard course={course} role="guest" onClick={() => navigate(`/courses/${course._id}`)} />
+            </Col>
+          ))}
+        </Row>
+      }
+
+      <Divider orientation="left" orientationMargin={0} style={{ fontWeight: 600, marginTop: 40 }}>
+        <span style={{ fontSize: 20 }}>4.  CÔNG NGHỆ & TRẺ NHỎ</span>
+      </Divider>
+      <Paragraph>Giúp cha mẹ định hướng sử dụng công nghệ an toàn, thông minh.</Paragraph>
+      {loading ? <Spin size="large" style={{ display: 'block', margin: '40px auto' }} /> :
+        kidsTechnology.length === 0 ? <Empty description="Chưa có khóa học công nghệ & trẻ nhỏ" style={{ margin: '32px 0' }} /> :
+        <Row gutter={[24, 24]}>
+          {kidsTechnology.map(course => (
+            <Col xs={24} sm={12} md={8} key={course._id}>
+              <CourseCard course={course} role="guest" onClick={() => navigate(`/courses/${course._id}`)} />
+            </Col>
+          ))}
+        </Row>
+      }
+
+      <Divider orientation="left" orientationMargin={0} style={{ fontWeight: 600, marginTop: 40 }}>
+        <span style={{ fontSize: 20 }}>5. GIÁO DỤC SỚM & PHÁT TRIỂN KỸ NĂNG</span>
+      </Divider>
+      <Paragraph>Hướng dẫn cha mẹ kích thích phát triển nhận thức, ngôn ngữ, sáng tạo.</Paragraph>
+      {loading ? <Spin size="large" style={{ display: 'block', margin: '40px auto' }} /> :
+        earlyEducation.length === 0 ? <Empty description="Chưa có khóa học giáo dục sớm & phát triển kỹ năng" style={{ margin: '32px 0' }} /> :
+        <Row gutter={[24, 24]}>
+          {earlyEducation.map(course => (
+            <Col xs={24} sm={12} md={8} key={course._id}>
+              <CourseCard course={course} role="guest" onClick={() => navigate(`/courses/${course._id}`)} />
+            </Col>
+          ))}
+        </Row>
+      }
+
+      <Divider orientation="left" orientationMargin={0} style={{ fontWeight: 600, marginTop: 40 }}>
+        <span style={{ fontSize: 20 }}>6. CÂN BẰNG TÂM LÝ CHO CHA MẸ</span>
+      </Divider>
+      <Paragraph>Vì muốn con hạnh phúc, cha mẹ trước hết cần hạnh phúc.</Paragraph>
+      {loading ? <Spin size="large" style={{ display: 'block', margin: '40px auto' }} /> :
+        parentMental.length === 0 ? <Empty description="Chưa có khóa học cân bằng tâm lý cho cha mẹ" style={{ margin: '32px 0' }} /> :
+        <Row gutter={[24, 24]}>
+          {parentMental.map(course => (
             <Col xs={24} sm={12} md={8} key={course._id}>
               <CourseCard course={course} role="guest" onClick={() => navigate(`/courses/${course._id}`)} />
             </Col>

@@ -17,11 +17,24 @@ const statusColor = {
   draft: 'default',
 };
 
-const levelColor = {
-  beginner: 'blue',
-  intermediate: 'purple',
-  advanced: 'red',
+const categoryMap = {
+  child_psychology: 'Tâm lý trẻ em',
+  parenting_skills: 'Kỹ năng làm cha mẹ',
+  child_health_nutrition: 'Sức khỏe & dinh dưỡng trẻ em',
+  kids_technology: 'Công nghệ & trẻ nhỏ',
+  early_education_skills: 'Giáo dục sớm & phát triển kỹ năng',
+  parent_mental_balance: 'Cân bằng tâm lý cho cha mẹ',
 };
+
+const categoryColor = {
+  child_psychology: 'magenta',
+  parenting_skills: 'blue',
+  child_health_nutrition: 'green',
+  kids_technology: 'cyan',
+  early_education_skills: 'purple',
+  parent_mental_balance: 'orange',
+};
+
 
 export default function CourseCard({ course, role = 'student', onClick, onEdit, onDelete, onSubmit }) {
   const {
@@ -29,7 +42,6 @@ export default function CourseCard({ course, role = 'student', onClick, onEdit, 
     description,
     price,
     thumbnail,
-    level,
     category,
     duration,
     studentsCount,
@@ -67,16 +79,33 @@ export default function CourseCard({ course, role = 'student', onClick, onEdit, 
         avatar={<Avatar icon={<UserOutlined />} src={teacher?.avatar} />}
         title={<Title level={4} style={{ margin: 0 }}>{title}</Title>}
         description={
-          <Text type="secondary" style={{ display: 'block', minHeight: 48}}>
-            {description?.slice(0, 100)}...
-          </Text>}
+          <Text
+            type="secondary"
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              minHeight: "48px",
+              lineHeight: "1.5em",
+              maxHeight: "3em",
+            }}
+          >
+            {description?.slice(0, 100)}
+          </Text>
+        }
       />
 
       <Space direction="vertical" size="small" style={{ marginTop: 16 }}>
+
+        {/* Category only */}
         <Space>
-          <Tag color={levelColor[level]}>{level?.toUpperCase()}</Tag>
-          <Tag>{category}</Tag>
+          <Tag color={categoryColor[category]}>
+            {categoryMap[category] || category}
+          </Tag>
         </Space>
+
         <Space>
           <ClockCircleOutlined />
           <Text>
@@ -85,10 +114,12 @@ export default function CourseCard({ course, role = 'student', onClick, onEdit, 
               : `${Math.floor(duration / 60)} phút`}
           </Text>
         </Space>
+
         <Space>
           <BookOutlined />
           <Text>{studentsCount} học viên</Text>
         </Space>
+
         <Space>
           <DollarOutlined />
           <Text>
@@ -99,6 +130,7 @@ export default function CourseCard({ course, role = 'student', onClick, onEdit, 
                 : `${price.toLocaleString()}đ`}
           </Text>
         </Space>
+
         {role === 'teacher' && (
           <Space>
             <Text strong>Trạng thái:</Text>
