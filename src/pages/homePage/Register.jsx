@@ -37,15 +37,15 @@ export default function Register() {
         <Form.Item name="password" label="Password" rules={[{ required: true }]}>
           <Input.Password />
         </Form.Item>
-        {/* <Form.Item name="role" label="Role" rules={[{ required: true }]}>
+        <Form.Item name="role" label="Role" rules={[{ required: true }]}>
           <Select options={[
             { label: 'Student', value: 'student' },
             { label: 'Teacher', value: 'teacher' },
           ]} />
-        </Form.Item> */}
-        <Form.Item name="role" initialValue="student" hidden>
-          <Input type="hidden" />
         </Form.Item>
+        {/* <Form.Item name="role" initialValue="student" hidden>
+          <Input type="hidden" />
+        </Form.Item> */}
         <Form.Item label="Email" name="email" rules={[{ required: true, type: 'email' }]}>
           <Input onChange={(e) => setEmail(e.target.value)} />
         </Form.Item>

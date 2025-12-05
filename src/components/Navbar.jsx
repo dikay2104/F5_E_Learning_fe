@@ -10,6 +10,8 @@ import {
   deleteNotification,
 } from '../services/notificationService';
 import socket from '../utils/socket';
+import logo from '../assets/logo2.png';
+
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -159,8 +161,17 @@ export default function Navbar() {
   return (
     <>
       <Menu mode="horizontal" theme="light" style={{ height: 55, lineHeight: '55px' }}>
-        <Menu.Item key="logo" onClick={() => navigate('/')}>
-          <div style={{ fontWeight: 'bold', fontSize: 18 }}>Learning For Parents</div>
+        <Menu.Item key="logo" onClick={() => navigate('/home')}>
+          <img 
+            src={logo} 
+            alt="Logo" 
+            style={{
+              height: 50,
+              objectFit: "contain",
+              cursor: "pointer",
+              marginTop: 3
+            }}
+          />
         </Menu.Item>
 
         <Menu.Item key="spacer" style={{ marginLeft: 'auto', cursor: 'default' }} disabled />

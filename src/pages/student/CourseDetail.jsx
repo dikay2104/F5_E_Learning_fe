@@ -108,14 +108,21 @@ export default function StudentCourseDetail() {
     }
   };
 
-  const handleVNPay = async () => {
+  const handlePayOS = async () => {
     try {
       const res = await createPayment(courseId);
-      window.location.href = res.data.paymentUrl;
+
+      if (res.data.paymentUrl) {
+        window.location.href = res.data.paymentUrl; // redirect sang PayOS checkout
+      } else {
+        message.error("Không nhận được URL thanh toán từ server!");
+      }
     } catch (err) {
-      message.error("Không thể thanh toán!");
+      console.error(err);
+      message.error("Không thể tạo giao dịch PayOS!");
     }
   };
+
 
   const handleMoMo = () => {
     message.info("Chức năng này chỉ để tham khảo/báo cáo, không thực hiện thanh toán MoMo thực tế.");
@@ -251,21 +258,17 @@ export default function StudentCourseDetail() {
                       type="primary"
                       block
                       size="large"
+                      icon={<QrcodeOutlined style={{ fontSize: 22 }} />}
+                      onClick={handlePayOS}
                       style={{
                         marginBottom: 18,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: 12,
                         fontWeight: 500,
                         fontSize: 16,
                         borderRadius: 8,
                         boxShadow: "0 2px 8px rgba(24,144,255,0.08)"
                       }}
-                      icon={<QrcodeOutlined style={{ fontSize: 22 }} />}
-                      onClick={handleVNPay}
                     >
-                      Thanh toán qua VNPay
+                      Thanh toán qua PayOS (QR Banking)
                     </Button>
                     <Button
                       block

@@ -30,6 +30,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import ChatBox from './components/ChatBox';
 import React from 'react';
 import CertificatePage from './pages/CertificatePage';
+import PaymentSuccess from './pages/PaymentSuccess';
 
 
 function PrivateRoute({ element }) {
@@ -62,6 +63,7 @@ export default function App() {
                 {/* <Route path="/" element={<Home />} /> */}
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/payment/success" element={<PaymentSuccess />} />
 
                 <Route path="/uploadVideo" element={<UploadForm />} />
 
@@ -97,7 +99,7 @@ export default function App() {
       </AuthProvider>
 
       {/* ChatBox nổi góc phải dưới */}
-      <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 9999 }}>
+      {/* <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 9999 }}>
         {showChat ? (
           <ChatBox onClose={() => setShowChat(false)} />
         ) : (
@@ -109,7 +111,7 @@ export default function App() {
             💬
           </button>
         )}
-      </div>
+      </div> */}
     </GoogleOAuthProvider>
   );
 }

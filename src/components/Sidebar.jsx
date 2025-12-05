@@ -37,9 +37,9 @@ export default function Sidebar() {
   ];
 
   const teacherItems = [
-    commonHomeItem,
+    // commonHomeItem,
     { key: '/my-courses', icon: <BookOutlined />, label: 'My Courses' },
-    { key: '/feedback', icon: <MessageOutlined />, label: 'Feedback' },
+    // { key: '/feedback', icon: <MessageOutlined />, label: 'Feedback' },
     { key: '/my-courses/statistic', icon: <UsergroupAddOutlined />, label: 'Statistic' },
     commonAboutItem,
   ];
